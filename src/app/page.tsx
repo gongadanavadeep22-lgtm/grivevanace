@@ -237,7 +237,12 @@ function SubmitForm() {
       });
       const data = await parseJsonResponse(res) as { error?: string; ticketId?: string; department?: string; category?: string; slaDueAt?: string };
       if (!res.ok) throw new Error(data.error || "Submit failed");
-      setResult(data);
+      setResult({
+        ticketId: data.ticketId ?? "",
+        department: data.department ?? "",
+        category: data.category ?? "",
+        slaDueAt: data.slaDueAt ?? "",
+      });
       setDescription("");
       setLocation("");
       setCitizenName("");
