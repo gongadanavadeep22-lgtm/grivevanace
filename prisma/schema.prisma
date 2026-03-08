@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SlaRule {
+  id              String   @id @default(cuid())
+  department      String
+  category        String
+  hoursToResolve  Int
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  grievances      Grievance[]
+}
+
+model Grievance {
+  id              String    @id @default(cuid())
+  ticketId        String    @unique
+  description     String
+  category        String
+  department      String
+  location        String?
+  urgency         String    @default("normal")
+  status         String    @default("received")
+  photoUrl        String?
+  citizenContact  String?
+  citizenName     String?
+  slaDueAt        DateTime?
+  assignedToId    String?
+  assignedTo      Worker?   @relation(fields: [assignedToId], references: [id])
+  slaRuleId       String?
+  slaRule         SlaRule?  @relation(fields: [slaRuleId], references: [id])
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  history         GrievanceHistory[]
+}
+
+model GrievanceHistory {
+  id          String    @id @default(cuid())
+  grievanceId String
+  grievance   Grievance @relation(fields: [grievanceId], references: [id], onDelete: Cascade)
+  status      String
+  note        String?
+  createdAt   DateTime  @default(now())
+}
+
+model Worker {
+  id          String      @id @default(cuid())
+  name        String
+  email       String
+  department  String
+  role        String      @default("worker")
+  grievances  Grievance[]
+}

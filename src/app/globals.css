@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --card: #0a0a0a;
+  --card-elevated: #0d0d0d;
+  --accent: #a8a8a8;
+  --success: #c0c0c0;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --silver: #c0c0c0;
+  --silver-light: #e8e8e8;
+  --glow-silver: 0 0 16px rgba(192, 192, 192, 0.35), 0 0 32px rgba(192, 192, 192, 0.2);
+  --glow-silver-strong: 0 0 20px rgba(192, 192, 192, 0.4), 0 0 40px rgba(192, 192, 192, 0.2);
+  --glow-silver-text: 0 0 12px rgba(255, 255, 255, 0.3), 0 0 24px rgba(192, 192, 192, 0.2);
+}
+
+html,
+body {
+  background-color: #000000;
+  color: #c0c0c0;
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .glass {
+    @apply border border-white/10 bg-white/5 backdrop-blur-xl;
+  }
+  /* Dark elegant black with subtle silver glow accents */
+  .gradient-mesh {
+    background-color: #000000;
+    background-image:
+      radial-gradient(at 40% 20%, rgba(192, 192, 192, 0.04) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, rgba(192, 192, 192, 0.03) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, rgba(192, 192, 192, 0.02) 0px, transparent 50%);
+  }
+  /* Silver text with strong glow */
+  .text-silver-glow {
+    color: var(--silver-light);
+    text-shadow: var(--glow-silver-text);
+  }
+  .text-silver {
+    color: var(--silver);
+  }
+  /* Worker live map markers - no default Leaflet icon bg */
+  .worker-map-marker.leaflet-div-icon {
+    background: transparent !important;
+    border: none !important;
+  }
+  /* Card glow for selected/active states */
+  .card-glow {
+    box-shadow: var(--glow-silver-strong);
+  }
+}
