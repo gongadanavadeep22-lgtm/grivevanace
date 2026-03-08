@@ -1,8 +1,16 @@
 # Deploy to Vercel
 
+## Quick Checklist
+
+- [ ] Create Postgres database (Neon / Vercel Postgres / Supabase)
+- [ ] Add DATABASE_URL, AUTH_SECRET to Vercel env vars
+- [ ] Push code to GitHub
+- [ ] Import repo in Vercel
+- [ ] Run `prisma db push` and `db:seed` with production DATABASE_URL
+
 ## Before You Push
 
-1. **Database**: SQLite does not work on Vercel (ephemeral filesystem). Use **PostgreSQL**:
+1. **Database**: Use **PostgreSQL** (SQLite does not work on Vercel):
    - [Neon](https://neon.tech) (free tier)
    - [Vercel Postgres](https://vercel.com/storage/postgres)
    - [Supabase](https://supabase.com) (free tier)
