@@ -36,7 +36,7 @@
    | `NEXTAUTH_URL`  | `https://your-app.vercel.app` | Vercel sets this automatically |
    | `GEMINI_API_KEY`| your key                 | Optional – for AI classification |
 
-4. Deploy. Vercel will run `prisma generate` and `next build`.
+4. Deploy. Vercel will run `prisma generate`, `prisma migrate deploy`, and `next build`.
 
 ## Post-Deploy
 

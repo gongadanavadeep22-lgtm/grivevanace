@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "postinstall": "node scripts/setup-env.js",
-    "predev": "prisma db push && prisma db seed",
+    "predev": "prisma migrate deploy && prisma db seed",
     "dev": "next dev -p 3002",
     "dev:alt": "next dev -p 3003",
-    "build": "prisma generate && next build",
+    "build": "prisma generate && prisma migrate deploy && next build",
     "start": "next start -p 3002",
     "lint": "next lint",
     "db:generate": "prisma generate",
