@@ -15,6 +15,12 @@ interface GrievanceRow {
 }
 
 export async function GET() {
+  if (!process.env.DATABASE_URL?.trim()) {
+    return NextResponse.json(
+      { error: "Database not configured. Add DATABASE_URL to .env.local or Vercel env vars." },
+      { status: 503 }
+    );
+  }
   try {
   const grievances = await prisma.grievance.findMany({
     include: { assignedTo: { select: { name: true } } },
