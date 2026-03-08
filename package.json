@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "postinstall": "node scripts/setup-env.js",
+    "predev": "prisma db push && prisma db seed",
     "dev": "next dev -p 3002",
     "dev:alt": "next dev -p 3003",
     "build": "prisma generate && next build",
@@ -11,6 +13,9 @@
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:seed": "tsx prisma/seed.ts"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@google/genai": "^1.44.0",

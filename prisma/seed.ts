@@ -11,6 +11,7 @@ async function main() {
       { department: "sanitation", category: "garbage", hoursToResolve: 24 },
       { department: "general", category: "other", hoursToResolve: 120 },
     ],
+    skipDuplicates: true,
   });
 
   await prisma.worker.createMany({
@@ -20,6 +21,7 @@ async function main() {
       { name: "Amit Sharma", email: "amit@gov.in", department: "roads", role: "worker" },
       { name: "Sita Nair", email: "sita@gov.in", department: "sanitation", role: "supervisor" },
     ],
+    skipDuplicates: true,
   });
 }
 

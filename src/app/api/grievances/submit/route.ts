@@ -5,6 +5,12 @@ import { classifyGrievanceAsync } from "@/lib/classify";
 import { getSlaHours, addHours } from "@/lib/sla";
 
 export async function POST(req: NextRequest) {
+  if (!process.env.DATABASE_URL?.trim()) {
+    return NextResponse.json(
+      { error: "Database not configured. Add DATABASE_URL to .env.local (local) or Vercel env vars." },
+      { status: 503 }
+    );
+  }
   try {
     const body = await req.json();
     const { description, location, citizenName, citizenContact, photoUrl } = body as {
@@ -60,7 +66,18 @@ export async function POST(req: NextRequest) {
       message: "Grievance registered successfully. Save your ticket ID to track status.",
     });
   } catch (e) {
-    console.error(e);
-    return NextResponse.json({ error: "Failed to submit grievance" }, { status: 500 });
+    console.error("Submit grievance error:", e);
+    const msg = e instanceof Error ? e.message : "";
+    const isDbError =
+      msg.includes("Can't reach database") ||
+      msg.includes("connection") ||
+      msg.includes("ECONNREFUSED") ||
+      msg.includes("P1001") ||
+      msg.includes("P1002");
+    const error =
+      isDbError
+        ? "Database connection failed. Check DATABASE_URL and that the database is running."
+        : "Failed to submit grievance. Please try again.";
+    return NextResponse.json({ error }, { status: 500 });
   }
 }
